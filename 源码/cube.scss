@@ -1,0 +1,230 @@
+
+
+  $color1:red;
+$color2:green;
+$color3:blue;
+$color4:yellow;
+$color5:purple;
+$color6:cyan;
+
+$cubeSize:270px;
+
+$boxShadow: 0 0 0 $cubeSize/35 gray   inset;
+$boxRadius: $cubeSize/18;
+
+@mixin  transition{
+  //transition-duration:1.5s;
+  //transition-delay:.1s;
+  transition-property:all;
+  transition-timing-function:ease-in-out;
+}
+
+*{
+  margin:0;
+  padding:0;
+  border:0;
+}
+
+p{
+  position:absolute;
+  top:$cubeSize*0.1;
+  left:30%;
+  right:30%;
+  button{
+    display:inline-block;
+    appearance: normal;
+    float:left;
+    width:32%;
+    font-size: 24px;
+    height:1.6em;
+    border-radius: 8px;
+    box-shadow: 0 0 0 3px #646464 inset;
+    overflow: hidden;
+    &:hover{
+      background-color:olive;
+      font-style: oblique;
+    }
+  }
+}
+
+#background{
+  position: absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  z-index: -1;
+  user-select: none;
+  border: 3px solid rgba(60, 200, 100, 0.5);
+  box-shadow: 0 0 0 10px rgba(60, 200, 100, 0.5) inset;
+  border-radius: 15px;
+  box-sizing: border-box;
+  &:after{
+    position: fixed;
+    bottom:50px;
+    left:30%;
+    right:30%;
+    content:"Drag Your Mouse To Interact With The Rubik! ";
+    text-align: center;
+    background-color: crimson;
+  }
+}
+#background::before{
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+
+  z-index: 40000;
+  user-select: none;
+  border: 3px solid #646464;
+  box-shadow: 0 0 0 10px darkcyan inset;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+.cube{
+  position: relative;
+  margin:{
+    left:50%;
+    right:50%;
+    top:$cubeSize*0.9;
+  }
+  width:0;
+  height:0;
+  text-align: center;
+
+  perspective: 10000px;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  transform: translate3d(0px, 0px, 0px) rotateX(60deg) rotateY(  0deg)  rotateZ( 45deg);
+  cursor: pointer;
+}
+
+
+.little_cube{
+  position: absolute;
+  width:$cubeSize/3;
+  height:$cubeSize/3;
+  box-shadow: $boxShadow;
+  border-radius: $boxRadius;
+
+
+  backface-visibility:hidden;
+
+  @include transition;
+}
+
+.center_cube,
+.edge_cube,
+.corner_cube,
+.core{
+  @extend .little_cube;
+}
+
+.center_cube_1  ,
+.center_cube_2  ,
+.center_cube_3  ,
+.center_cube_4  ,
+.center_cube_5  ,
+.center_cube_6  {@extend .little_cube;}
+
+.center_square_1,
+.center_square_2,
+.center_square_3,
+.center_square_4,
+.center_square_5,
+.center_square_6{ @extend .center_cube;}
+
+
+.center_square_1{       background-color: $color1  ;   transform:   translate3d(   0px,    0px,  ($cubeSize/2+1px))     rotateX(   0deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   1,   0,   0,   0,   0,   1,   0,    0,    0,  151,  1)  ;    }   */
+.center_square_2{       background-color: $color4  ;   transform:   translate3d(   0px,    0px, -($cubeSize/2+1px))     rotateX(   0deg)     rotateY( 180deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(  -1,   0,   0,   0,   0,   1,   0,   0,   0,   0,  -1,   0,    0,    0, -151,  1)  ;    }   */
+.center_square_3{       background-color: $color2  ;   transform:   translate3d(   0px,  ($cubeSize/2+1px),    0px)     rotateX( 270deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   0,  -1,   0,   0,   1,   0,   0,    0,  151,    0,  1)  ;    }   */
+.center_square_4{       background-color: $color3  ;   transform:   translate3d( ($cubeSize/2+1px),    0px,    0px)     rotateX(   0deg)     rotateY(  90deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   0,   0,  -1,   0,   0,   1,   0,   0,   1,   0,   0,   0,  151,    0,    0,  1)  ;    }   */
+.center_square_5{       background-color: $color5  ;   transform:   translate3d(   0px, -($cubeSize/2+1px),    0px)     rotateX(  90deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   0,   1,   0,   0,  -1,   0,   0,    0, -151,    0,  1)  ;    }   */
+.center_square_6{       background-color: $color6  ;   transform:   translate3d(-($cubeSize/2+1px),    0px,    0px)     rotateX(   0deg)     rotateY( 270deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   0,   0,   1,   0,   0,   1,   0,   0,  -1,   0,   0,   0, -151,    0,    0,  1)  ;    }   */
+
+
+.edge_cube_1,
+.edge_cube_2,
+.edge_cube_3,
+.edge_cube_4,
+.edge_cube_5,
+.edge_cube_6,
+.edge_cube_7,
+.edge_cube_8,
+.edge_cube_9,
+.edge_cube_10,
+.edge_cube_11,
+.edge_cube_12{@extend .edge_cube;}
+
+
+.edge_square_1  {       background-color:  $color1   ;   transform:  translate3d(    0px,    ($cubeSize/3+1px),  ($cubeSize/2+1px))     rotateX(   0deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   1,    0,    0,    0,    0,    1,  0,    0,  101,  151,  1  )  ;  }    */
+.edge_square_2  {       background-color:  $color2   ;   transform:  translate3d(    0px,    ($cubeSize/2+1px),  ($cubeSize/3+1px))     rotateX( 270deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   0,   -1,    0,    0,    1,    0,  0,    0,  151,  101,  1  )  ;  }    */
+.edge_square_3  {       background-color:  $color1   ;   transform:  translate3d(  ($cubeSize/3+1px),      0px,  ($cubeSize/2+1px))     rotateX(   0deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   1,    0,    0,    0,    0,    1,  0,  101,    0,  151,  1  )  ;  }    */
+.edge_square_4  {       background-color:  $color3   ;   transform:  translate3d(  ($cubeSize/2+1px),      0px,  ($cubeSize/3+1px))     rotateX(   0deg)     rotateY(  90deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  0,   0,  -1,   0,   0,   1,    0,    0,    1,    0,    0,  0,  151,    0,  101,  1  )  ;  }    */
+.edge_square_5  {       background-color:  $color1   ;   transform:  translate3d(    0px,   -($cubeSize/3+1px),  ($cubeSize/2+1px))     rotateX(   0deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   1,    0,    0,    0,    0,    1,  0,    0, -101,  151,  1  )  ;  }    */
+.edge_square_6  {       background-color:  $color5   ;   transform:  translate3d(    0px,   -($cubeSize/2+1px),  ($cubeSize/3+1px))     rotateX(  90deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   0,    1,    0,    0,   -1,    0,  0,    0, -151,  101,  1  )  ;  }    */
+.edge_square_7  {       background-color:  $color1   ;   transform:  translate3d( -($cubeSize/3+1px),      0px,  ($cubeSize/2+1px))     rotateX(   0deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   1,    0,    0,    0,    0,    1,  0, -101,    0,  151,  1  )  ;  }    */
+.edge_square_8  {       background-color:  $color6   ;   transform:  translate3d( -($cubeSize/2+1px),      0px,  ($cubeSize/3+1px))     rotateX(   0deg)     rotateY( 270deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  0,   0,   1,   0,   0,   1,    0,    0,   -1,    0,    0,  0, -151,    0,  101,  1  )  ;  }    */
+.edge_square_9  {       background-color:  $color2   ;   transform:  translate3d(  ($cubeSize/3+1px),    ($cubeSize/2+1px),    0px)     rotateX( 270deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   0,   -1,    0,    0,    1,    0,  0,  101,  151,    0,  1  )  ;  }    */
+.edge_square_10 {       background-color:  $color3   ;   transform:  translate3d(  ($cubeSize/2+1px),    ($cubeSize/3+1px),    0px)     rotateX(   0deg)     rotateY(  90deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  0,   0,  -1,   0,   0,   1,    0,    0,    1,    0,    0,  0,  151,  101,    0,  1  )  ;  }    */
+.edge_square_11 {       background-color:  $color3   ;   transform:  translate3d(  ($cubeSize/2+1px),   -($cubeSize/3+1px),    0px)     rotateX(   0deg)     rotateY(  90deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  0,   0,  -1,   0,   0,   1,    0,    0,    1,    0,    0,  0,  151, -100,    0,  1  )  ;  }    */
+.edge_square_12 {       background-color:  $color5   ;   transform:  translate3d(  ($cubeSize/3+1px),   -($cubeSize/2+1px),    0px)     rotateX(  90deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   0,    1,    0,    0,   -1,    0,  0,  101, -151,    0,  1  )  ;  }    */
+.edge_square_13 {       background-color:  $color5   ;   transform:  translate3d( -($cubeSize/3+1px),   -($cubeSize/2+1px),    0px)     rotateX(  90deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   0,    1,    0,    0,   -1,    0,  0, -101, -151,    0,  1  )  ;  }    */
+.edge_square_14 {       background-color:  $color6   ;   transform:  translate3d( -($cubeSize/2+1px),   -($cubeSize/3+1px),    0px)     rotateX(   0deg)     rotateY( 270deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  0,   0,   1,   0,   0,   1,    0,    0,   -1,    0,    0,  0, -151, -101,    0,  1  )  ;  }    */
+.edge_square_15 {       background-color:  $color6   ;   transform:  translate3d( -($cubeSize/2+1px),    ($cubeSize/3+1px),    0px)     rotateX(   0deg)     rotateY( 270deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  0,   0,   1,   0,   0,   1,    0,    0,   -1,    0,    0,  0, -151,  101,    0,  1  )  ;  }    */
+.edge_square_16 {       background-color:  $color2   ;   transform:  translate3d( -($cubeSize/3+1px),    ($cubeSize/2+1px),    0px)     rotateX( 270deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   0,   -1,    0,    0,    1,    0,  0, -101,  151,    0,  1  )  ;  }    */
+.edge_square_17 {       background-color:  $color2   ;   transform:  translate3d(    0px,    ($cubeSize/2+1px), -($cubeSize/3+1px))     rotateX( 270deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   0,   -1,    0,    0,    1,    0,  0,    0,  151, -101,  1  )  ;  }    */
+.edge_square_18 {       background-color:  $color4   ;   transform:  translate3d(    0px,    ($cubeSize/3+1px), -($cubeSize/2+1px))     rotateX(   0deg)     rotateY( 180deg)      rotateZ(  0deg)  ;  }     /*   matrix3d( -1,   0,   0,   0,   0,   1,    0,    0,    0,    0,   -1,  0,    0,  101, -151,  1  )  ;  }    */
+.edge_square_19 {       background-color:  $color3   ;   transform:  translate3d(  ($cubeSize/2+1px),      0px, -($cubeSize/3+1px))     rotateX(   0deg)     rotateY(  90deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  0,   0,  -1,   0,   0,   1,    0,    0,    1,    0,    0,  0,  151,    0, -101,  1  )  ;  }    */
+.edge_square_20 {       background-color:  $color4   ;   transform:  translate3d(  ($cubeSize/3+1px),      0px, -($cubeSize/2+1px))     rotateX(   0deg)     rotateY( 180deg)      rotateZ(  0deg)  ;  }     /*   matrix3d( -1,   0,   0,   0,   0,   1,    0,    0,    0,    0,   -1,  0,  100,    0, -151,  1  )  ;  }    */
+.edge_square_21 {       background-color:  $color5   ;   transform:  translate3d(    0px,   -($cubeSize/2+1px), -($cubeSize/3+1px))     rotateX(  90deg)     rotateY(   0deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  1,   0,   0,   0,   0,   0,    1,    0,    0,   -1,    0,  0,    0, -151, -101,  1  )  ;  }    */
+.edge_square_22 {       background-color:  $color4   ;   transform:  translate3d(    0px,   -($cubeSize/3+1px), -($cubeSize/2+1px))     rotateX(   0deg)     rotateY( 180deg)      rotateZ(  0deg)  ;  }     /*   matrix3d( -1,   0,   0,   0,   0,   1,    0,    0,    0,    0,   -1,  0,    0, -101, -151,  1  )  ;  }    */
+.edge_square_23 {       background-color:  $color6   ;   transform:  translate3d( -($cubeSize/2+1px),      0px, -($cubeSize/3+1px))     rotateX(   0deg)     rotateY( 270deg)      rotateZ(  0deg)  ;  }     /*   matrix3d(  0,   0,   1,   0,   0,   1,    0,    0,   -1,    0,    0,  0, -151,    0, -101,  1  )  ;  }    */
+.edge_square_24 {       background-color:  $color4   ;   transform:  translate3d( -($cubeSize/3+1px),      0px, -($cubeSize/2+1px))     rotateX(   0deg)     rotateY( 180deg)      rotateZ(  0deg)  ;  }     /*   matrix3d( -1,   0,   0,   0,   0,   1,    0,    0,    0,    0,   -1,  0, -101,    0, -151,  1  )  ;  }    */
+
+
+
+
+.corner_cube_1,
+.corner_cube_2,
+.corner_cube_3,
+.corner_cube_4,
+.corner_cube_5,
+.corner_cube_6,
+.corner_cube_7,
+.corner_cube_8{@extend .little_cube;}
+
+
+
+
+.corner_square_1    {     background-color: $color1   ;         transform:      translate3d(  ($cubeSize/3+1px),  ($cubeSize/3+1px),  ($cubeSize/2+1px) )     rotateX(    0deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   1,   0,   0,   0,   0,   1,   0,  100,  100,  151, 1)  ;  }        */
+.corner_square_2    {     background-color: $color2   ;         transform:      translate3d(  ($cubeSize/3+1px),  ($cubeSize/2+1px),  ($cubeSize/3+1px) )     rotateX(  270deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   0,  -1,   0,   0,   1,   0,   0,  101,  151,  101, 1)  ;  }        */
+.corner_square_3    {     background-color: $color3   ;         transform:      translate3d(  ($cubeSize/2+1px),  ($cubeSize/3+1px),  ($cubeSize/3+1px) )     rotateX(    0deg)     rotateY(  90deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   0,   0,  -1,   0,   0,   1,   0,   0,   1,   0,   0,   0,  151,  101,  101, 1)  ;  }        */
+.corner_square_4    {     background-color: $color1   ;         transform:      translate3d(  ($cubeSize/3+1px), -($cubeSize/3+1px),  ($cubeSize/2+1px) )     rotateX(    0deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   1,   0,   0,   0,   0,   1,   0,  100, -100,  151, 1)  ;  }        */
+.corner_square_5    {     background-color: $color3   ;         transform:      translate3d(  ($cubeSize/2+1px), -($cubeSize/3+1px),  ($cubeSize/3+1px) )     rotateX(    0deg)     rotateY(  90deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   0,   0,  -1,   0,   0,   1,   0,   0,   1,   0,   0,   0,  151, -101,  101, 1)  ;  }        */
+.corner_square_6    {     background-color: $color5   ;         transform:      translate3d(  ($cubeSize/3+1px), -($cubeSize/2+1px),  ($cubeSize/3+1px) )     rotateX(   90deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   0,   1,   0,   0,  -1,   0,   0,  101, -151,  101, 1)  ;  }        */
+.corner_square_7    {     background-color: $color1   ;         transform:      translate3d( -($cubeSize/3+1px), -($cubeSize/3+1px),  ($cubeSize/2+1px) )     rotateX(    0deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   1,   0,   0,   0,   0,   1,   0, -100, -100,  151, 1)  ;  }        */
+.corner_square_8    {     background-color: $color5   ;         transform:      translate3d( -($cubeSize/3+1px), -($cubeSize/2+1px),  ($cubeSize/3+1px) )     rotateX(   90deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   0,   1,   0,   0,  -1,   0,   0, -101, -151,  101, 1)  ;  }        */
+.corner_square_9    {     background-color: $color6   ;         transform:      translate3d( -($cubeSize/2+1px), -($cubeSize/3+1px),  ($cubeSize/3+1px) )     rotateX(    0deg)     rotateY( 270deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   0,   0,   1,   0,   0,   1,   0,   0,  -1,   0,   0,   0, -151, -101,  101, 1)  ;  }        */
+.corner_square_10   {     background-color: $color1   ;         transform:      translate3d( -($cubeSize/3+1px),  ($cubeSize/3+1px),  ($cubeSize/2+1px) )     rotateX(    0deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   1,   0,   0,   0,   0,   1,   0, -100,  100,  151, 1)  ;  }        */
+.corner_square_11   {     background-color: $color6   ;         transform:      translate3d( -($cubeSize/2+1px),  ($cubeSize/3+1px),  ($cubeSize/3+1px) )     rotateX(    0deg)     rotateY( 270deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   0,   0,   1,   0,   0,   1,   0,   0,  -1,   0,   0,   0, -151,  101,  101, 1)  ;  }        */
+.corner_square_12   {     background-color: $color2   ;         transform:      translate3d( -($cubeSize/3+1px),  ($cubeSize/2+1px),  ($cubeSize/3+1px) )     rotateX(  270deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   0,  -1,   0,   0,   1,   0,   0, -101,  151,  101, 1)  ;  }        */
+
+
+
+.corner_square_13   {     background-color: $color2   ;         transform:      translate3d(  ($cubeSize/3+1px),  ($cubeSize/2+1px), -($cubeSize/3+1px) )     rotateX(  270deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   0,  -1,   0,   0,   1,   0,   0,  101,  151, -101, 1)  ;  }        */
+.corner_square_14   {     background-color: $color3   ;         transform:      translate3d(  ($cubeSize/2+1px),  ($cubeSize/3+1px), -($cubeSize/3+1px) )     rotateX(    0deg)     rotateY(  90deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   0,   0,  -1,   0,   0,   1,   0,   0,   1,   0,   0,   0,  151,  101, -101, 1)  ;  }        */
+.corner_square_15   {     background-color: $color4   ;         transform:      translate3d(  ($cubeSize/3+1px),  ($cubeSize/3+1px), -($cubeSize/2+1px) )     rotateX(    0deg)     rotateY( 180deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(  -1,   0,   0,   0,   0,   1,   0,   0,   0,   0,  -1,   0,  101,  101, -151, 1)  ;  }        */
+.corner_square_16   {     background-color: $color3   ;         transform:      translate3d(  ($cubeSize/2+1px), -($cubeSize/3+1px), -($cubeSize/3+1px) )     rotateX(    0deg)     rotateY(  90deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   0,   0,  -1,   0,   0,   1,   0,   0,   1,   0,   0,   0,  151, -101, -101, 1)  ;  }        */
+.corner_square_17   {     background-color: $color5   ;         transform:      translate3d(  ($cubeSize/3+1px), -($cubeSize/2+1px), -($cubeSize/3+1px) )     rotateX(   90deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   0,   1,   0,   0,  -1,   0,   0,  101, -151, -101, 1)  ;  }        */
+.corner_square_18   {     background-color: $color4   ;         transform:      translate3d(  ($cubeSize/3+1px), -($cubeSize/3+1px), -($cubeSize/2+1px) )     rotateX(    0deg)     rotateY( 180deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(  -1,   0,   0,   0,   0,   1,   0,   0,   0,   0,  -1,   0,  101, -101, -151, 1)  ;  }        */
+.corner_square_19   {     background-color: $color5   ;         transform:      translate3d( -($cubeSize/3+1px), -($cubeSize/2+1px), -($cubeSize/3+1px) )     rotateX(   90deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   0,   1,   0,   0,  -1,   0,   0, -101, -151, -101, 1)  ;  }        */
+.corner_square_20   {     background-color: $color6   ;         transform:      translate3d( -($cubeSize/2+1px), -($cubeSize/3+1px), -($cubeSize/3+1px) )     rotateX(    0deg)     rotateY( 270deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   0,   0,   1,   0,   0,   1,   0,   0,  -1,   0,   0,   0, -151, -101, -101, 1)  ;  }        */
+.corner_square_21   {     background-color: $color4   ;         transform:      translate3d( -($cubeSize/3+1px), -($cubeSize/3+1px), -($cubeSize/2+1px) )     rotateX(    0deg)     rotateY( 180deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(  -1,   0,   0,   0,   0,   1,   0,   0,   0,   0,  -1,   0, -101, -101, -151, 1)  ;  }        */
+.corner_square_22   {     background-color: $color6   ;         transform:      translate3d( -($cubeSize/2+1px),  ($cubeSize/3+1px), -($cubeSize/3+1px) )     rotateX(    0deg)     rotateY( 270deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   0,   0,   1,   0,   0,   1,   0,   0,  -1,   0,   0,   0, -151,  101, -101, 1)  ;  }        */
+.corner_square_23   {     background-color: $color2   ;         transform:      translate3d( -($cubeSize/3+1px),  ($cubeSize/2+1px), -($cubeSize/3+1px) )     rotateX(  270deg)     rotateY(   0deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(   1,   0,   0,   0,   0,   0,  -1,   0,   0,   1,   0,   0, -101,  151, -101, 1)  ;  }        */
+.corner_square_24   {     background-color: $color4   ;         transform:      translate3d( -($cubeSize/3+1px),  ($cubeSize/3+1px), -($cubeSize/2+1px) )     rotateX(    0deg)     rotateY( 180deg)      rotateZ(   0deg)  ;  }   /*    matrix3d(  -1,   0,   0,   0,   0,   1,   0,   0,   0,   0,  -1,   0, -101,  101, -151, 1)  ;  }        */
+
